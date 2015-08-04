@@ -1,0 +1,104 @@
+.overlay {
+  position: absolute !important;
+  background: transparent;
+}
+
+.controls {
+  z-index: 10001;
+  position: fixed;
+}
+
+html,
+body {
+  background: #F9F7F6;
+  font-family: 'Open Sans';
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+header {
+  text-align: center;
+  padding: 2em;
+  color: #404D5B;
+}
+
+header h1 {
+  font-size: 4em;
+  line-height: .2;
+}
+
+header h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  zoom: 1;
+  filter: alpha(opacity=50);
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+
+nav {
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 2em;
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  text-decoration: none;
+  padding: 5px;
+  font-size: 1.3em;
+  border: 3px solid #F9F7F6;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-transform: uppercase;
+  color: #404D5B;
+}
+
+nav ul li a.active {
+  border: 3px solid #404D5B;
+}
+
+nav ul li a:hover {
+  background: #404D5B;
+  color: #F9F7F6;
+}
+
+.content {
+  width: 100%;
+  margin: 20px auto;
+  overflow: auto;
+}
+
+.content .tab {
+  padding: 1em 4em;
+  font-size: 2em;
+  line-height: 1.4;
+}
+
+.content .tab1 {
+  background: #34495E;
+  color: #B4B4B4;
+}
+
+.content .tab2 {
+  background: #E74C3C;
+  color: #fff;
+}
+
+.content .tab3 {
+  background: #bbc3c3;
+  color: #404D5B;
+}
+
+.content .tab4 {
+  background: #F9F7F6;
+}

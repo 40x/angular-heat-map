@@ -1,0 +1,12 @@
+<div>
+    <span class="text-danger">Current Digest Cycle:  {{digestDuration}} MS</span>
+    <span class="text-primary">Watchers set (exclusive to demo) : {{$$watchersCount}}</span>
+</div>
+<div class="controls btn-group">
+    <button class="btn btn-success" ng-if="!started" ng-click="start();">Start Recording {{selected}}</button>
+    <button class="btn btn-warning" ng-if="started" ng-click="stop();">Stop Recording {{selected}}</button>
+    <button ng-if="hasHoverData" class="btn btn-primary" ng-click="toggle($event, 'hover');">Show Mouse Events</button>
+    <button ng-if="hasClickData" class="btn btn-primary" ng-click="toggle($event, 'click');">Show Click Events</button>
+    <button ng-if="hasIdleData" class="btn btn-primary" ng-click="toggle($event, 'idle');">Show Idle Time</button>
+    <button ng-if="hasClickData || hasHoverData" class="btn btn-danger" ng-click="reset();">Reset Data</button>
+</div>
