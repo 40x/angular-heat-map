@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp', ['ui.router'])
+        .module('DemoApp', ['ui.router', 'ngCsv'])
 
         .config(config);
 

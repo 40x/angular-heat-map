@@ -2,9 +2,9 @@
     angular
         .module('DemoApp').directive('heatmap', heatMap);
 
-    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval'];
+    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout'];
 
-    function heatMap($document, $state, mapStore, $compile, $interval) {
+    function heatMap($document, $state, mapStore, $compile, $interval, $timeout) {
         return {
             restrict: 'A',
             scope: {},
@@ -74,6 +74,52 @@
                         scope.analyzing = false;
                     }
                 };
+
+                scope.showFrequency = function() {
+                    scope.usageArr = [];
+                    var target = null;
+                    _.each(mapStore.db[$state.current.name]['click'], function(evt) {
+                        var obj = {};
+                        target = evt.target.nodeName || evt.srcElement.nodeName;
+                        var range = document.caretRangeFromPoint(evt.pageX, evt.pageY);
+                        if (range) {
+                            range.expand('word');
+                            var word = range.startContainer.textContent.substring(range.startOffset, range.endOffset);
+                            var freqWord = (target === 'BUTTON' || target === 'A') ?  evt.target.outerText : word;
+                            var index = getFrequencyOf(freqWord, target);
+                        }
+                        obj = {
+                            'state': $state.current.name,
+                            'word': freqWord,
+                            'frequency': 1,
+                            'target': target
+                        };
+                        if(index === -1){
+                            scope.usageArr.push(obj);
+                        } else {
+                            scope.usageArr[index].frequency++;
+                        }
+                    });
+
+                    var btnStr = '<button type="button" ng-csv="usageArr" csv-header="[\'State\',\'Word\', \'Frequency\', \'Type\']" filename="frequency.csv" style="display: none;">Export</button>';
+                    btnStr = $compile(btnStr)(scope);
+                    angular.element(body).prepend(btnStr);
+                    $timeout(function(){
+                        btnStr.trigger('click');
+                    })
+
+                };
+
+                function getFrequencyOf(word, target) {
+                    var ind = -1;
+                    _.each(scope.usageArr, function(sample, index) {
+                        if(sample.word === word && sample.target === target) {
+                            ind = index;
+                            return;
+                        }
+                    });
+                    return ind;
+                }
 
                 function startRecordingIdleTime(event) {
                     scope.intervalId = $interval(function() {
