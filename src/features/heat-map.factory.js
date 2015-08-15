@@ -4,6 +4,11 @@
             var map = {};
 
             map.saveEvent = function(evt, state) {
+                map.prev = map.prev || 0;
+                if(map.prev) {
+                    evt.lag = (Date.now() - map.prev);
+                    console.log(evt.lag);
+                }
                 map.db = map.db || {};
                 map.db[state] = map.db[state] || {};
                 map.db[state].hover = map.db[state].hover || [];
@@ -16,7 +21,7 @@
                 } else if (evt.eventType === 'idle') {
                     map.db[state].idle.push(evt);
                 }
-
+                map.prev = Date.now();
             };
 
             map.clear = function() {

@@ -154,29 +154,14 @@
                         blur: 0.75
                     };
 
-                    var map = h337.create(config);
+                    scope.map = h337.create(config);
                     if (mapStore.db && mapStore.db[$state.current.name] && mapStore.db[$state.current.name][type] && mapStore.db[$state.current.name][type].length) {
                         if(showTracking){
-                            var i = 0;
-                            var trackerId = setInterval(function() {
-                                var evt = mapStore.db[$state.current.name][type][i];
-                                map.addData({
-                                    x: evt.pageX,
-                                    y: evt.pageY,
-                                    value: evt.detail
-                                });
-                                i++;
-                                if(i === mapStore.db[$state.current.name][type].length) {
-                                    clearInterval(trackerId);
-                                    window.scrollTo(0, 0);
-                                } else {
-                                    window.scrollTo(evt.pageX - window.outerWidth/2, evt.pageY - window.outerHeight/2);
-                                }
-                            }, 0200);
+                            showTracker($state.current.name, type, 0);
                         } else {
                             _.each(mapStore.db[$state.current.name][type], function(evt) {
-                                //draw map
-                                map.addData({
+                                //draw scope.map
+                                scope.map.addData({
                                     x: evt.pageX,
                                     y: evt.pageY,
                                     value: evt.detail
@@ -186,12 +171,32 @@
                     }
                 }
 
+
+                function showTracker(state, type, i) {
+                    var evt = mapStore.db[state][type][i];
+                    console.log(evt.lag);
+                    var trackerId = setTimeout(function() {
+                        scope.map.addData({
+                            x: evt.pageX,
+                            y: evt.pageY,
+                            value: evt.detail
+                        });
+                        if(i === mapStore.db[state][type].length - 1 ) {
+                            clearTimeout(trackerId);
+                            window.scrollTo(0, 0);
+                        } else {
+                            window.scrollTo(evt.pageX - window.outerWidth/2, evt.pageY - window.outerHeight/2);
+                            i = i+1;
+                            showTracker(state, type, i);
+                        }
+                    }, evt.lag);
+                }
+
                 function record(event) {
                     stopRecordingIdleTime();
                     mapStore.saveEvent(event, $state.current.name);
                     startRecordingIdleTime(event);
                 }
-
 
                 //visibility of page
 
