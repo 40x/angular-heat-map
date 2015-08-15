@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp').directive('heatmap', heatMap);
+        .module('DemoApp').directive('uiTrack', heatMap);
 
     heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout'];
 
@@ -12,8 +12,8 @@
                 var body = $document[0].body;
 
                 scope.started = false;
+                scope.tabHiddenFor = 0;
                 var controls = '<div ng-include="\'src/features/controls.html\'"></div>';
-
                 angular.element(body).prepend($compile(controls)(scope));
 
                 scope.start = function() {
@@ -36,10 +36,14 @@
 
                 scope.reset = function() {
                     mapStore.clear();
+                    var ol = document.getElementById('overlay');
+                    if(ol) {
+                        body.removeChild(ol);
+                    }
                     setFlags();
                 };
 
-                scope.toggle = function(e, type) {
+                scope.toggle = function(e, type, showTracking) {
                     var ol = document.getElementById('overlay');
                     var elem = e.srcElement || e.target;
                     if (ol) {
@@ -47,7 +51,11 @@
                         if (type === 'click') {
                             elem.innerText = 'Show Click Events';
                         } else if (type === 'hover') {
-                            elem.innerText = 'Show Hover Events';
+                            if(showTracking) {
+                                elem.innerText =  'Show Mouse Track';
+                            } else {
+                                elem.innerText = 'Show Hover Events';
+                            }
                         } else {
                             elem.innerText = 'Show Idle Time';
                         }
@@ -57,21 +65,15 @@
                         if (type === 'click') {
                             elem.innerText = 'Hide Click Events';
                         } else if (type === 'hover') {
-                            elem.innerText = 'Hide Hover Events';
+                            if(showTracking) {
+                                elem.innerText =  'Hide Mouse Track';
+                            } else {
+                                elem.innerText = 'Hide Hover Events';
+                            }
                         } else {
                             elem.innerText = 'Hide Idle Time';
                         }
-                        drawOnCanvas(type);
-                    }
-                };
-
-                scope.analyze = function() {
-                    if (!scope.analyzing) {
-                        $document.bind('click', analyze);
-                        scope.analyzing = true;
-                    } else {
-                        $document.unbind('click', analyze);
-                        scope.analyzing = false;
+                        drawOnCanvas(type, showTracking);
                     }
                 };
 
@@ -137,24 +139,10 @@
                     scope.hasHoverData = mapStore.db && mapStore.db[$state.current.name] && mapStore.db[$state.current.name].hover && mapStore.db[$state.current.name].hover.length;
                     scope.hasIdleData = mapStore.db && mapStore.db[$state.current.name] && mapStore.db[$state.current.name].idle && mapStore.db[$state.current.name].idle.length;
                 }
-                //
 
-                function analyze(e) {
-                    if (mapStore.db && mapStore.db[$state.current.name] && mapStore.db[$state.current.name].length) {
-                        var output = net.run([e.pageX, e.pageY]);
-                        if (output[0] > 0.8) {
-                            console.log(output[0], 'Hot');
-                        } else if (output[0] < 0.8 && output[0] > 0.5) {
-                            console.log(output[0], 'Warm');
-                        } else {
-                            console.log(output[0], 'Cold');
-                        }
-                    }
-                }
-
-
-                function drawOnCanvas(type) {
+                function drawOnCanvas(type, showTracking) {
                     var overlayEl = document.getElementById('overlay');
+                    console.dir(body);
                     overlayEl.style.height = body.scrollHeight + 'px';
                     overlayEl.style.width = body.scrollWidth + 'px';
 
@@ -168,21 +156,33 @@
 
                     var map = h337.create(config);
                     if (mapStore.db && mapStore.db[$state.current.name] && mapStore.db[$state.current.name][type] && mapStore.db[$state.current.name][type].length) {
-                        var netArray = [];
-                        var weight = null;
-                        _.each(mapStore.db[$state.current.name][type], function(evt) {
-                            //draw map
-                            map.addData({
-                                x: evt.pageX,
-                                y: evt.pageY,
-                                value: evt.detail
+                        if(showTracking){
+                            var i = 0;
+                            var trackerId = setInterval(function() {
+                                var evt = mapStore.db[$state.current.name][type][i];
+                                map.addData({
+                                    x: evt.pageX,
+                                    y: evt.pageY,
+                                    value: evt.detail
+                                });
+                                i++;
+                                if(i === mapStore.db[$state.current.name][type].length) {
+                                    clearInterval(trackerId);
+                                    window.scrollTo(0, 0);
+                                } else {
+                                    window.scrollTo(evt.pageX - window.outerWidth/2, evt.pageY - window.outerHeight/2);
+                                }
+                            }, 0200);
+                        } else {
+                            _.each(mapStore.db[$state.current.name][type], function(evt) {
+                                //draw map
+                                map.addData({
+                                    x: evt.pageX,
+                                    y: evt.pageY,
+                                    value: evt.detail
+                                });
                             });
-
-                            netArray.push({
-                                input: [evt.pageX, evt.pageY],
-                                output: [1]
-                            });
-                        });
+                        }
                     }
                 }
 
@@ -193,12 +193,52 @@
                 }
 
 
+                //visibility of page
+
+                var hidden, visibilityChange;
+                if (typeof document.hidden !== "undefined") {
+                    hidden = "hidden";
+                    visibilityChange = "visibilitychange";
+                } else if (typeof document.mozHidden !== "undefined") {
+                    hidden = "mozHidden";
+                    visibilityChange = "mozvisibilitychange";
+                } else if (typeof document.msHidden !== "undefined") {
+                    hidden = "msHidden";
+                    visibilityChange = "msvisibilitychange";
+                } else if (typeof document.webkitHidden !== "undefined") {
+                    hidden = "webkitHidden";
+                    visibilityChange = "webkitvisibilitychange";
+                }
+
+                function handleVisibilityChange() {
+                    if (document[hidden]) {
+                        startRecordingHidden();
+                    } else {
+                        endRecordingHidden();
+                    }
+                }
+
+                if (typeof document.addEventListener !== "undefined" || typeof document[hidden] !== "undefined") {
+                    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+                }
+
+                function startRecordingHidden() {
+                    scope.startHideAt = Date.now();
+                }
+
+                function endRecordingHidden() {
+                    var newTotal = Date.now() - scope.startHideAt;
+                    scope.tabHiddenFor += newTotal;
+                }
+
+
                 //perf stuff
                 setInterval(function interval(){
                     var t1 = Date.now();
                     scope.$apply();
                     scope.digestDuration = (Date.now() - t1);
                 }, 0200);
+
             }
         }
     }

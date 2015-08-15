@@ -1,13 +1,21 @@
-<div>
-    <span class="text-danger">Current Digest Cycle:  {{digestDuration}} MS</span>
-    <span class="text-primary">Watchers set (exclusive to demo) : {{$$watchersCount}}</span>
-</div>
-<div class="controls btn-group">
-    <button class="btn btn-success" ng-if="!started" ng-click="start();">Start Recording {{selected}}</button>
-    <button class="btn btn-warning" ng-if="started" ng-click="stop();">Stop Recording {{selected}}</button>
-    <button ng-if="hasHoverData" class="btn btn-primary" ng-click="toggle($event, 'hover');">Show Mouse Events</button>
-    <button ng-if="hasClickData" class="btn btn-primary" ng-click="toggle($event, 'click');">Show Click Events</button>
-    <button ng-if="hasIdleData" class="btn btn-primary" ng-click="toggle($event, 'idle');">Show Idle Time</button>
-    <button ng-if="hasClickData || hasHoverData" class="btn btn-primary" ng-click="showFrequency();">Show Frequency</button>
-    <button ng-if="hasClickData || hasHoverData" class="btn btn-danger" ng-click="reset();">Reset Data</button>
+<div class="admin-panel clearfix">
+    <div >
+        <span class="text-danger">Current Digest Cycle:  {{digestDuration}} MS</span>
+    </div>
+    <div >
+        <span class="text-danger">Watchers set for demo : {{$$watchersCount}}</span>
+    </div>
+    <div>
+        <span class="text-danger">Tab inactive Time : {{tabHiddenFor/1000 || 0}} Sec</span>
+    </div>
+    <ul class="controls">
+        <li ng-if="!started" ng-click="start();">Start Recording {{selected}}</li>
+        <li ng-if="started" ng-click="stop();">Stop Recording {{selected}}</li>
+        <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', false);">Show Mouse Events</li>
+        <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', true);">Show Mouse Track</li>
+        <li ng-if="hasClickData" ng-click="toggle($event, 'click', false);">Show Click Events</li>
+        <li ng-if="hasIdleData"  ng-click="toggle($event, 'idle', false);">Show Idle Time</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="showFrequency();">Show Frequency</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="reset();">Reset Data</li>
+    </ul>
 </div>

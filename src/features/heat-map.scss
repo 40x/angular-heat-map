@@ -5,7 +5,6 @@
 
 .controls {
   z-index: 10001;
-  position: fixed;
 }
 
 html,
@@ -14,6 +13,7 @@ body {
   font-family: 'Open Sans';
   font-size: 12px;
   line-height: 1.25;
+  text-align: justify;
 }
 
 header {
@@ -101,4 +101,29 @@ nav ul li a:hover {
 
 .content .tab4 {
   background: #F9F7F6;
+}
+
+
+.admin-panel {
+  background: rgba(255, 255, 255, 0.7);
+  width: 225px;
+  position: absolute;
+  padding: 10px;
+  font-size: 1.2rem;
+
+  ul {
+    padding-left: 20px;
+  }
+
+  ul li {
+    list-style: none;
+    padding: 8px;
+    color:red;
+
+    &:hover {
+      text-indent: 15px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
 }
