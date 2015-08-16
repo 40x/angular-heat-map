@@ -22,9 +22,12 @@
     }
   },
   "resolutions": {
-    "angular": ">= 1.0.8"
+    "angular": "1.4.0",
+    "d3": "~3.3.13",
+    "nvd3": "~v1.1.15-beta"
   },
   "dependencies": {
-    "ng-csv": "~0.3.3"
+    "ng-csv": "~0.3.3",
+    "nvd3": "git://github.com/novus/nvd3.git#~1.8.1"
   }
 }
