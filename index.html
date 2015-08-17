@@ -7,17 +7,20 @@
     <title>Application Heat Map Demo</title>
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel='stylesheet' href='bower_components/nvd3/src/nv.d3.css' />
+    <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css' />
     <!-- endbower -->
 
     <!-- inject:css -->
     <link rel="stylesheet" href="/dist/css/index.css">
     <!-- endinject -->
-
+    <link rel="stylesheet" href="https://rawgit.com/novus/nvd3/v1.1.15-beta/nv.d3.min.css"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
-
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="https://rawgit.com/mbostock/d3/master/d3.min.js"></script>
+    <script src="https://rawgit.com/novus/nvd3/v1.1.15-beta/nv.d3.min.js"></script>
+    <script src="https://rawgit.com/krispo/angular-nvd3/v0.1.1/dist/angular-nvd3.js"></script>
 
 </head>
 <body ng-controller="DemoController as demoVm">
@@ -50,36 +53,32 @@
             <div ui-view ></div>
         </div>
 
-<button type="button" ng-click="demoVm.drawChart()">Draw chart</button>
-<div class="clearfix">
-    <nvd3 options="demoVm.options" data="demoVm.dataToBePlotted"></nvd3>
-</div>
-
-
         <!-- bower:js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+        <script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/nvd3/nv.d3.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="bower_components/heatmap.js-amd/build/heatmap.min.js"></script>
         <script src="bower_components/lodash/lodash.js"></script>
         <!-- endbower -->
 
-<script src="bower_components/angular/angular.js"></script>
+
+
 
 <!-- endbower -->
 
 <!-- inject:js -->
 <script src="/src/app.module.js"></script>
 <script src="/src/app.controller.js"></script>
+        <script src="/src/features/report/ReportController.js"></script>
 <script src="/src/features/heat-map.directive.js"></script>
 <script src="/src/features/heat-map.factory.js"></script>
 <!-- endinject -->
 
-<script src="bower_components/d3/d3.js"></script>
-<script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
-<script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+
 </body>
 </html>

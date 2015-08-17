@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp', ['ui.router', 'ngCsv','nvd3ChartDirectives','nvd3'])
+        .module('DemoApp', ['ui.router', 'ngCsv','nvd3','ui.bootstrap'])
 
         .config(config);
 
