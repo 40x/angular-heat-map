@@ -36,6 +36,7 @@
                 };
 
                 scope.reset = function() {
+                    scope.stop();
                     mapStore.clear();
                     var ol = document.getElementById('overlay');
                     if(ol) {
@@ -96,7 +97,7 @@
                             'word': freqWord,
                             'frequency': 1,
                             'target': target,
-                            'time': $filter('date')(evt.timeStamp, 'yyyy-MM-dd HH:mm:ss Z')
+                            'time': ($filter('date')(evt.timeStamp, 'medium')).toString()
                         };
                         if(index === -1){
                             scope.usageArr.push(obj);
