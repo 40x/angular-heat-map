@@ -2,9 +2,9 @@
     angular
         .module('DemoApp').directive('uiTrack', heatMap);
 
-    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout'];
+    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$filter'];
 
-    function heatMap($document, $state, mapStore, $compile, $interval, $timeout) {
+    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $filter) {
         return {
             restrict: 'A',
             scope: {},
@@ -95,16 +95,18 @@
                             'state': $state.current.name,
                             'word': freqWord,
                             'frequency': 1,
-                            'target': target
+                            'target': target,
+                            'time': $filter('date')(evt.timeStamp, 'yyyy-MM-dd HH:mm:ss Z')
                         };
                         if(index === -1){
                             scope.usageArr.push(obj);
                         } else {
                             scope.usageArr[index].frequency++;
+                            scope.usageArr[index].time = scope.usageArr[index].time + ', ' + obj.time;
                         }
                     });
 
-                    var btnStr = '<button type="button" ng-csv="usageArr" csv-header="[\'State\',\'Word\', \'Frequency\', \'Type\']" filename="frequency.csv" style="display: none;">Export</button>';
+                    var btnStr = '<button type="button" ng-csv="usageArr" csv-header="[\'State\',\'Word\', \'Frequency\', \'Type\', \'Time\']" filename="frequency.csv" style="display: none;">Export</button>';
                     btnStr = $compile(btnStr)(scope);
                     angular.element(body).prepend(btnStr);
                     $timeout(function(){

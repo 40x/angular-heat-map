@@ -10,7 +10,7 @@
     </div>
     <ul class="controls">
         <li ng-if="!started" ng-click="start();">Start Recording {{selected}}</li>
-        <li ng-if="started" ng-click="stop();">Stop Recording {{selected}}</li>
+        <li ng-if="started" ng-click="stop();" class="red-dot">Stop Recording {{selected}}</li>
         <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', false);">Show Mouse Events</li>
         <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', true);">Show Mouse Track</li>
         <li ng-if="hasClickData" ng-click="toggle($event, 'click', false);">Show Click Events</li>
