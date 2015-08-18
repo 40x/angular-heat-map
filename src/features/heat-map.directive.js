@@ -2,9 +2,9 @@
     angular
         .module('DemoApp').directive('uiTrack', heatMap);
 
-    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$filter'];
+    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal', '$filter'];
 
-    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $filter) {
+    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $modal, $filter) {
         return {
             restrict: 'A',
             scope: {},
@@ -113,6 +113,19 @@
                     $timeout(function(){
                         btnStr.trigger('click');
                     })
+
+                };
+
+                scope.viewReport = function() {
+
+                    var modalInstance = $modal.open({
+                        templateUrl: 'src/features/report/chart.html',
+                        size: 'md',
+                        backdrop: 'static',
+                        controller: 'ReportController',
+                        controllerAs: 'Vm',
+                        animation: true
+                    });
 
                 };
 

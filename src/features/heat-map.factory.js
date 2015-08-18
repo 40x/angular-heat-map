@@ -23,7 +23,7 @@
             };
 
             map.clear = function() {
-                map.db = [];
+                map.db = {};
             };
 
             return map;
