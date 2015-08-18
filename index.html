@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Heat Map Demo</title>
+    <title>Angular ui-track</title>
 
     <!-- bower:css -->
     <link rel='stylesheet' href='bower_components/nvd3/nv.d3.css' />
@@ -48,6 +48,8 @@
             <div ui-view ></div>
         </div>
 
+
+
         <!-- bower:js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -63,15 +65,9 @@
         <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
         <!-- endbower -->
 
-
-<!-- inject:js -->
-<script src="/src/app.module.js"></script>
-<script src="/src/app.controller.js"></script>
-<script src="/src/features/report/report.controller.js"></script>
-<script src="/src/features/heat-map.directive.js"></script>
-<script src="/src/features/heat-map.factory.js"></script>
-<!-- endinject -->
-
+        <!-- inject:js -->
+        <script src="/dist/js/scripts.js"></script>
+        <!-- endinject -->
 
 </body>
 </html>

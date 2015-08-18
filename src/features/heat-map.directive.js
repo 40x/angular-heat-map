@@ -2,9 +2,9 @@
     angular
         .module('DemoApp').directive('uiTrack', heatMap);
 
-    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal'];
+    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal', '$filter'];
 
-    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $modal) {
+    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $modal, $filter) {
         return {
             restrict: 'A',
             scope: {},
@@ -24,6 +24,7 @@
                         pageY: 0
                     });
                     scope.started = true;
+                    mapStore.prev = Date.now();
                 };
 
                 scope.stop = function() {
@@ -35,6 +36,7 @@
                 };
 
                 scope.reset = function() {
+                    scope.stop();
                     mapStore.clear();
                     var ol = document.getElementById('overlay');
                     if(ol) {
@@ -94,16 +96,18 @@
                             'state': $state.current.name,
                             'word': freqWord,
                             'frequency': 1,
-                            'target': target
+                            'target': target,
+                            'time': ($filter('date')(evt.timeStamp, 'medium')).toString()
                         };
                         if(index === -1){
                             scope.usageArr.push(obj);
                         } else {
                             scope.usageArr[index].frequency++;
+                            scope.usageArr[index].time = scope.usageArr[index].time + ', ' + obj.time;
                         }
                     });
 
-                    var btnStr = '<button type="button" ng-csv="usageArr" csv-header="[\'State\',\'Word\', \'Frequency\', \'Type\']" filename="frequency.csv" style="display: none;">Export</button>';
+                    var btnStr = '<button type="button" ng-csv="usageArr" csv-header="[\'State\',\'Word\', \'Frequency\', \'Type\', \'Time\']" filename="frequency.csv" style="display: none;">Export</button>';
                     btnStr = $compile(btnStr)(scope);
                     angular.element(body).prepend(btnStr);
                     $timeout(function(){
@@ -155,7 +159,6 @@
 
                 function drawOnCanvas(type, showTracking) {
                     var overlayEl = document.getElementById('overlay');
-                    console.dir(body);
                     overlayEl.style.height = body.scrollHeight + 'px';
                     overlayEl.style.width = body.scrollWidth + 'px';
 
@@ -187,7 +190,6 @@
 
                 function showTracker(state, type, i) {
                     var evt = mapStore.db[state][type][i];
-                    console.log(evt.lag);
                     var trackerId = setTimeout(function() {
                         scope.map.addData({
                             x: evt.pageX,

@@ -16,24 +16,32 @@ gulp.task('sass', function(){
         .pipe(gulp.dest('./dist/css'));
 });
 
+//concat js
+gulp.task('concat-js', function(){
+    return gulp.src([
+        'src/**/*.module.js', //load all modules first
+        'src/**/*.controller.js',  //load all controllers
+        'src/**/*.directive.js', //load all directives
+        'src/**/*.factory.js', //load all factories
+        'src/**/*.service.js', //load all services
+        'src/**/*.filter.js' //load all services
+    ])
+        .pipe(concat('scripts.js'))
+        .pipe(gulp.dest('./dist/js'));
+});
+
 //reload when something changes once scss is converted to css
-gulp.task('trigger-reload', ['sass'], function(){
+gulp.task('trigger-reload', ['inject'], function(){
     liveReload.reload('./index.html');
 });
 
 //inject once scss is converted to css
-gulp.task('inject',['sass'], function () {
+gulp.task('inject',['sass', 'concat-js'], function () {
     var target = gulp.src('./index.html');
 
     var sources = gulp.src([
-                    'src/**/*.module.js', //load all modules first
-                    'src/**/*.controller.js',  //load all controllers
-                    'src/**/*.directive.js', //load all directives
-                    'src/**/*.factory.js', //load all factories
-                    'src/**/*.service.js', //load all services
-                    'src/**/*.filter.js', //load all services
+                    'dist/js/*.js',
                     'dist/css/*.css' //pick the concatenated css from the converted scss files
-
                     ], {read: false});
 
     return target

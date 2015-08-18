@@ -127,3 +127,25 @@ nav ul li a:hover {
     }
   }
 }
+
+@keyframes blink {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.red-dot {
+    animation: blink 0.85s infinite ease-in-out;
+    -webkit-animation: blink 0.85s infinite ease-in-out;
+}
