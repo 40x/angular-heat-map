@@ -24,6 +24,7 @@
                         pageY: 0
                     });
                     scope.started = true;
+                    mapStore.prev = Date.now();
                 };
 
                 scope.stop = function() {
@@ -142,7 +143,6 @@
 
                 function drawOnCanvas(type, showTracking) {
                     var overlayEl = document.getElementById('overlay');
-                    console.dir(body);
                     overlayEl.style.height = body.scrollHeight + 'px';
                     overlayEl.style.width = body.scrollWidth + 'px';
 
@@ -174,7 +174,6 @@
 
                 function showTracker(state, type, i) {
                     var evt = mapStore.db[state][type][i];
-                    console.log(evt.lag);
                     var trackerId = setTimeout(function() {
                         scope.map.addData({
                             x: evt.pageX,
