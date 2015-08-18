@@ -11,6 +11,7 @@
         var chartData = [];
 
         if(mapStore.db) {
+            console.log('map ',mapStore.db);
             _.each(mapStore.db, function(state, i) {
                 var clicked = 0;
                 //if this state contains a click event push it to chart data
