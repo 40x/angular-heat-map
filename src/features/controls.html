@@ -1,0 +1,22 @@
+<div class="admin-panel clearfix">
+    <div >
+        <span class="text-danger">Current Digest Cycle:  {{digestDuration}} MS</span>
+    </div>
+    <div >
+        <span class="text-danger">Watchers set for demo : {{$$watchersCount}}</span>
+    </div>
+    <div>
+        <span class="text-danger">Tab inactive Time : {{tabHiddenFor/1000 || 0}} Sec</span>
+    </div>
+    <ul class="controls">
+        <li ng-if="!started" ng-click="start();">Start Recording {{selected}}</li>
+        <li ng-if="started" ng-click="stop();" class="red-dot">Stop Recording {{selected}}</li>
+        <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', false);">Show Mouse Events</li>
+        <li ng-if="hasHoverData" ng-click="toggle($event, 'hover', true);">Show Mouse Track</li>
+        <li ng-if="hasClickData" ng-click="toggle($event, 'click', false);">Show Click Events</li>
+        <li ng-if="hasIdleData"  ng-click="toggle($event, 'idle', false);">Show Idle Time</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="showFrequency();">Show Frequency</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="viewReport();">View report</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="reset();">Reset Data</li>
+    </ul>
+</div>
