@@ -4,8 +4,8 @@
   "version": "1.0",
   "author": "Kashyap Mukkamala",
   "main": [
-    "./dist/uitrack.css",
-    "./dist/uitrack.js"
+    "/dist/css/uitrack.css",
+    "/dist/js/uitrack.js"
   ],
   "dependencies": {
     "angular": "1.4.0",
