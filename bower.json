@@ -3,7 +3,7 @@
   "description": "ui track",
   "version": "1.0",
   "author": "Kashyap Mukkamala",
-  "main": "src/*",
+  "main": "src/ui-track/**/*",
   "dependencies": {
     "angular-nvd3": "~0.1.1",
     "heatmap.js-amd": "*",
