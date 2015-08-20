@@ -3,10 +3,7 @@
   "description": "ui track",
   "version": "1.0",
   "author": "Kashyap Mukkamala",
-  "main": [
-    "dist/css/uitrack.css",
-    "dist/js/uitrack.js"
-  ],
+  "main": "src/*",
   "dependencies": {
     "angular-nvd3": "~0.1.1",
     "heatmap.js-amd": "*",
