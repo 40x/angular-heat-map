@@ -12,7 +12,7 @@ gulp.task('sass', function(){
     return gulp.src('src/**/*.scss')
         .pipe(sass())
         .pipe(gulp.dest('./dist/css'))
-        .pipe(concat('index.css'))
+        .pipe(concat('uitrack.css'))
         .pipe(gulp.dest('./dist/css'));
 });
 
@@ -26,7 +26,7 @@ gulp.task('concat-js', function(){
         'src/**/*.service.js', //load all services
         'src/**/*.filter.js' //load all filters
     ])
-        .pipe(concat('scripts.js'))
+        .pipe(concat('uitrack.js'))
         .pipe(gulp.dest('./dist/js'));
 });
 
