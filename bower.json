@@ -1,6 +1,6 @@
 {
-  "name": "egen-seed",
-  "description": "Egen Seed",
+  "name": "ui-track",
+  "description": "Ui Track",
   "version": "1.0",
   "author": "Kashyap Mukkamala",
   "dependencies": {
@@ -14,7 +14,8 @@
     "lodash": "~3.10.1",
     "modernizr": "~2.8.3",
     "ng-csv": "~0.3.3",
-    "nvd3": "git://github.com/novus/nvd3.git#~1.8.1"
+    "nvd3": "git://github.com/novus/nvd3.git#~1.8.1",
+    "ui-track": "git@github.com:kashyapmukkamala/angular-heat-map#integration"
   },
   "overrides": {
     "angular-nvd3": {
