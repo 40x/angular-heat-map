@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp').factory('mapStore', function() {
+        .module('uiTrack').factory('mapStore', function() {
             var map = {};
 
             map.saveEvent = function(evt, state) {

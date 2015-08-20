@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('DemoApp').controller('ReportController', ReportController );
+    angular.module('uiTrack').controller('ReportController', ReportController );
 
     ReportController.$inject = ['mapStore'];
 

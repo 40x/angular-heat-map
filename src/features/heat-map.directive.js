@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp').directive('uiTrack', heatMap);
+        .module('uiTrack').directive('uiTrack', heatMap);
 
     heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal', '$filter'];
 

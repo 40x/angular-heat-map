@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('DemoApp', ['ui.router', 'ngCsv','nvd3','ui.bootstrap'])
+        .module('DemoApp', ['ui.router', 'ui.bootstrap', 'uiTrack'])
 
         .config(config);
 
@@ -17,6 +17,7 @@
 
             .state('future', {
                 name: 'future',
+                url: '/future',
                 url: '/future',
                 template: '<div class="tab tab2">\n    <p>The future scope of this application can be extended to provide predictive analysis on what parts of the application are being used \n        to their highest extent and which ones could be modified for a better user experience. We plan on using javascript/java based neural \n        network for analyzing the user interaction, but because of the nature of the data set being used (mostly because it is small) the \n        training system is erroneous, we plan on overcoming it by collecting a larger set of data.\n    </p>\n    <p>\n        Another challenge that we have identified is to show the activity pertaining to hover events like dropdowns, modal and any other dom \n        element that does not persist on the screen. We plan on recording the user activity end to end and replay the whole activity to avoid\n        any gap in data. The biggest challenge here would be to overcome the involuntary XSS feature implemented by the browsers.\n    </p>\n    <p>\n        For the future scope of the project we also plan on implementing the following:\n        <ul>\n            <li>\n                Number of events occurred on each page of the application        \n            </li>\n            <li>\n                Event frequency based on time of the day.\n            </li>\n            <li>\n                Demographic segregation of events.\n            </li>\n            <li>\n                Create a super set of high quality data that serves as the main data source for future predictions\n            </li>\n        </ul>\n    </p>\n</div>'
             })

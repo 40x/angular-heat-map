@@ -3,9 +3,7 @@
 
     angular.module('DemoApp').controller('DemoController', DemoController );
 
-    DemoController.$inject = ['mapStore', '$state'];
-
-    function DemoController (mapStore, $state) {
+    function DemoController () {
         var demoVm = this;
     }
 
