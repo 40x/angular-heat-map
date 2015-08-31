@@ -1,12 +1,30 @@
 (function() {
     angular
         .module('DemoApp', ['ui.router', 'ui.bootstrap', 'uiTrack'])
-
+        .factory('myInterceptor', function($q) {
+            var numberOfHttpCalls = {
+              'GET' : 0,
+               'PUT' : 0
+            };
+            return {
+                request: function (config) {
+                    if(config.method === 'GET') {
+                        numberOfHttpCalls['GET']++;
+                    } else if(config.method === 'PUT') {
+                        numberOfHttpCalls['PUT']++;
+                    }
+                    return config || $q.when(config);
+                },
+                numberOfHttpCalls: numberOfHttpCalls
+            };
+        })
         .config(config);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider','$httpProvider'];
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider, $urlRouterProvider, $httpProvider) {
+
+        $httpProvider.interceptors.push('myInterceptor');
         $urlRouterProvider.otherwise('/home');
         $stateProvider
             .state('home', {

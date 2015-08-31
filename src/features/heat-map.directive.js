@@ -2,9 +2,9 @@
     angular
         .module('uiTrack').directive('uiTrack', heatMap);
 
-    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal', '$filter'];
+    heatMap.$inject = ['$document', '$state', 'mapStore', '$compile', '$interval', '$timeout', '$modal', '$filter','myInterceptor'];
 
-    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $modal, $filter) {
+    function heatMap($document, $state, mapStore, $compile, $interval, $timeout, $modal, $filter, myInterceptor) {
         return {
             restrict: 'A',
             scope: {},
@@ -124,6 +124,20 @@
                         backdrop: 'static',
                         controller: 'ReportController',
                         controllerAs: 'Vm',
+                        animation: true
+                    });
+
+                };
+
+                scope.viewHttpCalls = function() {
+                    $timeout(function() {
+                        console.log(myInterceptor.numberOfHttpCalls);
+                    });
+
+                    var modalInstance = $modal.open({
+                        template: '<div class="modal-header">{{myInterceptor.numberOfHttpCalls || json}}</div>',
+                        size: 'md',
+                        backdrop: 'static',
                         animation: true
                     });
 

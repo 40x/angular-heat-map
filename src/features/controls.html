@@ -17,6 +17,7 @@
         <li ng-if="hasIdleData"  ng-click="toggle($event, 'idle', false);">Show Idle Time</li>
         <li ng-if="hasClickData || hasHoverData" ng-click="showFrequency();">Show Frequency</li>
         <li ng-if="hasClickData || hasHoverData" ng-click="viewReport();">View report</li>
+        <li ng-if="hasClickData || hasHoverData" ng-click="viewHttpCalls();">View Http Calls</li>
         <li ng-if="hasClickData || hasHoverData" ng-click="reset();">Reset Data</li>
     </ul>
 </div>
